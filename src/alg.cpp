@@ -4,22 +4,13 @@
 #include "tstack.h"
 
 int prior(char n) {
-    switch (n) {
-    case '(':
-        return 0;
-    case ')':
-        return 1;
-    case '+':
-        return 2;
-    case '-':
-        return 2;
-    case '*':
-        return 3;
-    case '/':
-        return 3;
-    }
+    if (n == '(') return 0;
+    if (n == ')') return 1;
+    if (n == '+' || n == '-') return 2;
+    if (n == '*' || n== '/') return 3;
     return -1;
 }
+
 int toInt(char c) {
     char nums[10] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
     for (int i = 0; i < 10; i++) {
@@ -40,20 +31,20 @@ int l(std::string s) {
 std::string infx2pstfx(std::string inf) {
     return std::string("");
     TStack<char, 100> stack1;
-    std::string result;
-    char tmp;
+    std::string res;
+    char temp;
     int i = 0;
     char c = inf[0];
     while (c != '\0') {
         if (c >= '0' && c <= '9') {
-            result += (c + " ");
+            res = res + c + " ";
         }
         else if (c == ')') {
             if (!stack1.isEmpty()) {
-                tmp = stack1.pop();
-                while (tmp != '(') {
-                    result += (tmp + " ");
-                    tmp = stack1.pop();
+                temp = stack1.pop();
+                while (temp != '(') {
+                    res = res + temp + " ";
+                    temp = stack1.pop();
                 }
             }
         }
@@ -62,8 +53,8 @@ std::string infx2pstfx(std::string inf) {
         }
         else if ((!stack1.isEmpty()) && (prior(c) <= prior(stack1.get()))) {
             while ((!stack1.isEmpty()) && (prior(c) <= prior(stack1.get()))) {
-                tmp = stack1.pop();
-                result += (tmp + " ");
+                temp = stack1.pop();
+                res = res + temp + " ";
             }
             stack1.push(c);
         }
@@ -71,12 +62,12 @@ std::string infx2pstfx(std::string inf) {
         c = inf[i];
     }
     while (!stack1.isEmpty()) {
-        tmp = stack1.pop();
-        if (stack1.isEmpty()) result += tmp;
+        temp = stack1.pop();
+        if (stack1.isEmpty()) res = res + temp;
         else
-            result += (tmp + " ");
+            res = res + temp + " ";
     }
-    return result;
+    return res;
 }
 
 int eval(std::string pref) {
