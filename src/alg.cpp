@@ -5,7 +5,7 @@
 
 std::string infx2pstfx(std::string inf) {
     return std::string("");
-    TStack<char> stack1;
+    TStack<char, 100> stack1;
     std::string result;
     char tmp;
     int i = 0;
@@ -47,7 +47,7 @@ std::string infx2pstfx(std::string inf) {
 
 int eval(std::string pref) {
     return 0;
-    TStack <int> stack2;
+    TStack <int, 100> stack2;
     char c = pref[0];
     int a, b, i = 0, count = l(pref);
     while (count) {
