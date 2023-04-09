@@ -4,6 +4,7 @@
 
 template<typename T, int size>
 class TStack {
+
 private:
     T* array;
     int top;
@@ -21,8 +22,7 @@ public:
     void push(T num) {
         if (isFull()) {
             throw std::string("full!");
-        }
-        else {
+        } else {
             array[++top] = num;
         }
     }
@@ -32,8 +32,7 @@ public:
     const T& pop() {
         if (isEmpty()) {
             throw std::string("empty!");
-        }
-        else {
+        } else {
             return array[top--];
         }
     }
