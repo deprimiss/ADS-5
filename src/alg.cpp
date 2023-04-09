@@ -19,7 +19,7 @@ std::string infx2pstfx(std::string inf) {
                 tmp = stack1.pop();
                 while (tmp != '(') {
                     result += (tmp + " ");
-                    temp = stack1.pop();
+                    tmp = stack1.pop();
                 }
             }
         }
