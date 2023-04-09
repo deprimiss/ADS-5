@@ -3,13 +3,13 @@
 #include <map>
 #include "tstack.h"
 
-    int prior(char n) {
-        if (n == '(') return 0;
-        if (n == ')') return 1;
-        if (n == '+' || n == '-') return 2;
-        if (n == '*' || n == '/') return 3;
-        return -1;
-    }
+int prior(char n) {
+    if (n == '(') return 0;
+    if (n == ')') return 1;
+    if (n == '+' || n == '-') return 2;
+    if (n == '*' || n == '/') return 3;
+    return -1;
+}
 
 int toInt(char c) {
     char nums[10] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
@@ -28,7 +28,6 @@ int l(std::string s) {
     return l;
 }
 std::string infx2pstfx(std::string inf) {
-
     TStack<char, 100> stack1;
     std::string res;
     char temp;
@@ -37,8 +36,7 @@ std::string infx2pstfx(std::string inf) {
     while (c != '\0') {
         if (c >= '0' && c <= '9') {
             res = res + c + " ";
-        }
-        else if (c == ')') {
+        } else if (c == ')') {
             if (!stack1.isEmpty()) {
                 temp = stack1.pop();
                 while (temp != '(') {
@@ -46,11 +44,9 @@ std::string infx2pstfx(std::string inf) {
                     temp = stack1.pop();
                 }
             }
-        }
-        else if ((stack1.isEmpty()) || c == '(' || prior(c) > prior(stack1.get())) {
+        } else if ((stack1.isEmpty()) || c == '(' || prior(c) > prior(stack1.get())) {
             stack1.push(c);
-        }
-        else if ((!stack1.isEmpty()) && (prior(c) <= prior(stack1.get()))) {
+        } else if ((!stack1.isEmpty()) && (prior(c) <= prior(stack1.get()))) {
             while ((!stack1.isEmpty()) && (prior(c) <= prior(stack1.get()))) {
                 temp = stack1.pop();
                 res = res + temp + " ";
@@ -78,8 +74,7 @@ int eval(std::string pref) {
         if (c != ' ') {
             if ((c >= '0') && (c <= '9')) {
                 stack2.push(toInt(c));
-            }
-            else if (!stack2.isEmpty()) {
+            } else if (!stack2.isEmpty()) {
                 a = stack2.pop();
                 b = stack2.pop();
                 if (c == '+') stack2.push(a + b);
