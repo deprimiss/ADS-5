@@ -44,7 +44,8 @@ std::string infx2pstfx(std::string inf) {
                     temp = stack1.pop();
                 }
             }
-        } else if ((stack1.isEmpty()) || c == '(' || prior(c) > prior(stack1.get())) {
+        } else if ((stack1.isEmpty()) || c == '(' || prior(c) >\
+                   prior(stack1.get())) {
             stack1.push(c);
         } else if ((!stack1.isEmpty()) && (prior(c) <= prior(stack1.get()))) {
             while ((!stack1.isEmpty()) && (prior(c) <= prior(stack1.get()))) {
@@ -66,7 +67,6 @@ std::string infx2pstfx(std::string inf) {
 }
 
 int eval(std::string pref) {
-
     TStack <int, 100> stack2;
     char c = pref[0];
     int a, b, i = 0, count = l(pref);
