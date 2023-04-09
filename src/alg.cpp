@@ -11,8 +11,7 @@
         return -1;
     }
 std::string infx2pstfx(std::string inf) {
-    // добавьте код
-    return std::string("");
+
     TStack<char, 100> stack1;
     std::string res;
     for (int i = 0; i < inf.length(); i++) {
@@ -54,8 +53,7 @@ std::string infx2pstfx(std::string inf) {
 }
 
 int eval(std::string pref) {
-    // добавьте код
-    return 0;
+
     int prived(char act) { return act - '0'; }
 
     int eval(std::string str) {
