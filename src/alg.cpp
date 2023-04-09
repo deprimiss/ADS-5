@@ -3,6 +3,40 @@
 #include <map>
 #include "tstack.h"
 
+int prior(char n) {
+    switch (n) {
+    case '(':
+        return 0;
+    case ')':
+        return 1;
+    case '+':
+        return 2;
+    case '-':
+        return 2;
+    case '*':
+        return 3;
+    case '/':
+        return 3;
+    }
+    return -1;
+}
+int toInt(char c) {
+    char nums[10] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9' };
+    for (int i = 0; i < 10; i++) {
+        if (c == nums[i])
+            return i;
+    }
+    return -1;
+}
+
+int l(std::string s) {
+    int l = 0;
+    char c = s[0];
+    while (c != '\0')
+        c = s[++l];
+    return l;
+}
+
 std::string infx2pstfx(std::string inf) {
     return std::string("");
     TStack<char, 100> stack1;
