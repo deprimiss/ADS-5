@@ -13,10 +13,10 @@ public:
         array = new T[size];
     }
     bool isEmpty() const {
-        return top == -1;
+        return (top == -1);
     }
     bool isFull() const {
-        return top == size - 1;
+        return (top == size - 1);
     }
     void push(T num) {
         if (isFull()) {
@@ -27,12 +27,7 @@ public:
         }
     }
     const T& get() {
-        if (isEmpty()) {
-            throw std::string("empty!");
-        }
-        else {
-            return array[top];
-        }
+        return array[top];
     }
     const T& pop() {
         if (isEmpty()) {
