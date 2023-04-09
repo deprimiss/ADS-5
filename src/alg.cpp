@@ -14,90 +14,66 @@ std::string infx2pstfx(std::string inf) {
 
     TStack<char, 100> stack1;
     std::string res;
-    for (int i = 0; i < inf.length(); i++) {
-        if (inf[i] >= '0' && inf[i] <= '9') {
-            res += inf[i];
-            res += ' ';
+    char temp;
+    int i = 0;
+    char c = inf[0];
+    while (c != '\0') {
+        if (c >= '0' && c <= '9') {
+            res = res + c + " ";
         }
-        else if (inf[i] == '(' || prior(inf[i]) > prior(stack1.get())\
-            || stack1.isEmpty()) {
-            stack1.push(inf[i]);
-        }
-        else if ((prior(inf[i]) <= prior(stack1.get()))\
-            && (prior(inf[i]) != 1)) {
-            while (prior(inf[i]) <= prior(stack1.get())) {
-                res += stack1.get();
-                res += ' ';
-                stack1.pop();
-            }
-            stack1.push(inf[i]);
-        }
-        else if (inf[i] == ')') {
-            while (stack1.get() != '(') {
-                res += stack1.get();
-                res += ' ';
-                stack1.pop();
-            }
-            stack1.pop();
-        }
-        if (i == (inf.length() - 1)) {
-            while (!stack1.isEmpty()) {
-                res += stack1.get();
-                res += ' ';
-                stack1.pop();
+        else if (c == ')') {
+            if (!stack1.isEmpty()) {
+                temp = stack1.pop();
+                while (temp != '(') {
+                    res = res + temp + " ";
+                    temp = stack1.pop();
+                }
             }
         }
+        else if ((stack1.isEmpty()) || c == '(' || prior(c) > prior(stack1.get())) {
+            stack1.push(c);
+        }
+        else if ((!stack1.isEmpty()) && (prior(c) <= prior(stack1.get()))) {
+            while ((!stack1.isEmpty()) && (prior(c) <= prior(stack1.get()))) {
+                temp = stack1.pop();
+                res = res + temp + " ";
+            }
+            stack1.push(c);
+        }
+        ++i;
+        c = inf[i];
     }
-    res.pop_back();
+    while (!stack1.isEmpty()) {
+        temp = stack1.pop();
+        if (stack1.isEmpty()) res = res + temp;
+        else
+            res = res + temp + " ";
+    }
     return res;
 }
 
 int eval(std::string pref) {
 
-    int prived(char act) { return act - '0'; }
-
-    int eval(std::string str) {
-        TStack<int, 100> stack2;
-        int res = 0;
-        for (int i = 0; i < str.length(); i++) {
-            if (str[i] == ' ') {
-                continue;
+    TStack <int, 100> stack2;
+    char c = pref[0];
+    int a, b, i = 0, count = l(pref);
+    while (count) {
+        if (c != ' ') {
+            if ((c >= '0') && (c <= '9')) {
+                stack2.push(toInt(c));
             }
-            if (str[i] >= '0' && str[i] <= '9') {
-                stack2.push(prived(str[i]));
-            }
-            if (str[i] == '+') {
-                int act1 = stack2.get();
-                stack2.pop();
-                int act2 = stack2.get();
-                res = (act1 + act2);
-                stack2.pop();
-                stack2.push(res);
-            }
-            if (str[i] == '-') {
-                int act1 = stack2.get();
-                stack2.pop();
-                int act1 = stack2.get();
-                res = (act2 - act1);
-                stack2.pop();
-                stack2.push(res);
-            }
-            if (str[i] == '*') {
-                int cur1 = stack2.get();
-                stack2.pop();
-                int cur2 = stack2.get();
-                res = (act1 * act2);
-                stack2.pop();
-                stack2.push(res);
-            }
-            if (post[i] == '/') {
-                int cur1 = stack2.get();
-                stack2.pop();
-                int cur2 = stack2.get();
-                res = (act2 / act1);
-                stack2.pop();
-                stack2.push(res);
+            else if (!stack2.isEmpty()) {
+                a = stack2.pop();
+                b = stack2.pop();
+                if (c == '+') stack2.push(a + b);
+                if (c == '-') stack2.push(b - a);
+                if (c == '*') stack2.push(a * b);
+                if (c == '/') stack2.push(b / a);
             }
         }
-        return stack2.get();
+        i++;
+        c = pref[i];
+        count--;
     }
+    return(stack2.get());
+}
